@@ -1,7 +1,7 @@
 /* =========================================================
    SCENE. — RUNWAY
    가운데 세로 영상: 한 번 재생하고 마지막 장면에서 고정
-   화면을 벗어났다가 다시 들어오면 처음부터 다시 재생
+   화면을 벗어났다가 다시 들어오거나, 멈춘 영상을 클릭하면 처음부터 다시 재생
    재생 중 마우스를 올리면 정지 / 떼면 이어서 재생
    화면 밖에 있을 때는 재생을 멈춰 리소스 절약
    ========================================================= */
@@ -26,6 +26,16 @@
 
   video.addEventListener("mouseenter", () => { hovering = true; sync(); });
   video.addEventListener("mouseleave", () => { hovering = false; sync(); });
+
+  // 끝나서 멈춘 뒤 영상을 클릭하면 처음부터 다시 재생 (마우스가 올라가 있어도 재생)
+  video.addEventListener("ended", () => video.classList.add("is-ended"));
+  video.addEventListener("play", () => video.classList.remove("is-ended"));
+  video.addEventListener("click", () => {
+    if (!video.ended) return;
+    video.currentTime = 0;
+    const p = video.play();
+    if (p && p.catch) p.catch(() => {});
+  });
 
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(([entry]) => {

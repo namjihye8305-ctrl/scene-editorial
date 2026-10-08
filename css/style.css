@@ -537,6 +537,8 @@ p { margin: 0; }
   object-fit: cover;
   display: block;
 }
+/* 재생이 끝나 멈춘 상태 — 클릭하면 다시 재생 (js/runway.js) */
+.runway__video.is-ended { cursor: pointer; }
 
 /* 가장자리 그라데이션 — 영상 위에 덮이므로 마우스 이벤트는 통과시킴 */
 .runway__fade {
