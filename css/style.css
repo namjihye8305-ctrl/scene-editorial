@@ -1,0 +1,623 @@
+/* =========================================================
+   SCENE. — EDITORIAL
+   Figma 배너 규격: 1440 × 610px
+   모든 좌표/크기는 1440 × 610 디자인 좌표계 기준이며
+   --u (= 배너 너비 / 1440) 를 곱해 배너 크기에 비례하도록 함
+   ========================================================= */
+
+@font-face {
+  font-family: "Helvetica Now Display";
+  src: url("../assets/fonts/HelveticaNowDisplay-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Now Display";
+  src: url("../assets/fonts/HelveticaNowDisplay-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Now Display";
+  src: url("../assets/fonts/HelveticaNowDisplay-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Helvetica Now Display", sans-serif;
+  --font-ko: "Pretendard", sans-serif;
+
+  --ink: #111111;
+  --paper: #ffffff;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: #ffffff; /* Figma 페이지 프레임 배경 */
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p { margin: 0; }
+
+
+/* =========================================================
+   EDITORIAL BANNER — 1440 : 610
+   ========================================================= */
+.editorial {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 610;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #dddddd; /* 첫 장면 톤 — 전환 중 검은 빈 화면 방지 */
+}
+
+/* 1 디자인 px */
+.ed-media,
+.ed-copy {
+  --u: calc(100cqw / 1440);
+}
+
+/* ---------- 이미지 레이어 ---------- */
+.ed-media {
+  position: absolute;
+  inset: 0;
+}
+
+.ed-layer {
+  position: absolute;
+  inset: 0;
+  will-change: opacity;
+}
+
+/* 사진 박스: 원본 비율 그대로(aspect-ratio), 배너 좌표계에서 위치·크기만 지정.
+   배너 밖으로 넘치는 부분은 .editorial 의 overflow: hidden 으로 잘림 */
+.ed-layer__frame {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  aspect-ratio: var(--ratio);
+}
+
+.ed-layer__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform-origin: 50% 50%;
+  will-change: filter, transform;
+  backface-visibility: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 좌측 단색 영역으로 이어지는 사선 페이드 (Figma Rectangle 2) — 박스 x 0, 너비 --veil-w
+   우측 어둡게 (Figma Rectangle 3, 좌우반전) — 박스 x --shade-x, 너비 1440 - x, 불투명도 --shade-o */
+.ed-layer__veil,
+.ed-layer__shade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.ed-layer__veil {
+  left: 0;
+  width: calc(var(--veil-w) * var(--u));
+}
+.ed-layer__shade {
+  left: calc(var(--shade-x) * var(--u));
+  right: 0;
+  opacity: var(--shade-o);
+}
+
+/* SEONGSU — Figma 크롭: 1287.6 × 724.7 @ (154.9, -32.3) / 좌측 #DDD 안개 영역으로 페이드 */
+.ed-layer--seongsu {
+  background: linear-gradient(90deg, #dddddd 0 30%, #2b2e34 100%);
+  --x: 154.9; --y: -32.3; --w: 1287.6; --ratio: 1672 / 941;
+  --veil-w: 784; --shade-x: 784; --shade-o: 0.4;
+}
+.ed-layer--seongsu .ed-layer__veil {
+  background: linear-gradient(-80.75deg, rgba(221, 221, 221, 0) 34.71%, #dddddd 67.67%);
+}
+.ed-layer--seongsu .ed-layer__shade {
+  background: linear-gradient(118.84deg, rgba(0, 0, 0, 0) 51.04%, #000 71.59%);
+}
+
+/* EULJIRO — Figma 크롭: 1329.8 × 748.4 @ (264.2, -87.4) / 좌측 #0B0B0B 블랙 영역으로 페이드 */
+.ed-layer--euljiro {
+  background: #0b0b0b;
+  --x: 264.2; --y: -87.4; --w: 1329.8; --ratio: 1672 / 941;
+  --veil-w: 1020; --shade-x: 662; --shade-o: 0.5;
+}
+.ed-layer--euljiro .ed-layer__veil {
+  background: linear-gradient(-73.12deg, rgba(5, 5, 5, 0) 29.99%, #0b0b0b 57.42%);
+}
+.ed-layer--euljiro .ed-layer__shade {
+  background: linear-gradient(132.73deg, rgba(0, 0, 0, 0) 58.53%, #000 83.54%);
+}
+
+/* HANNAM — Figma 크롭: 1610.9 × 906.6 @ (-148, -59.7) / 배너 전체를 덮음 */
+.ed-layer--hannam {
+  background: #3a302b;
+  --x: -148; --y: -59.7; --w: 1610.9; --ratio: 2560 / 1441;
+  --veil-w: 775; --shade-x: 248; --shade-o: 0.25;
+}
+/* 왼쪽 75px 띠 — 사진 1976.5 × 906.6 @ (-206.9, -58.7), 비율 무시하고 늘림 */
+.ed-layer__patch {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: calc(75 * var(--u));
+  overflow: hidden;
+}
+.ed-layer__patch img {
+  position: absolute;
+  left: calc(-206.9 * var(--u));
+  top: calc(-58.7 * var(--u));
+  width: calc(1976.5 * var(--u));
+  height: calc(906.6 * var(--u));
+  max-width: none;
+  user-select: none;
+}
+.ed-layer--hannam .ed-layer__veil {
+  opacity: 0.45;
+  background: linear-gradient(-70.21deg, rgba(232, 214, 204, 0) 24.01%, #e8d6cc 81.87%);
+}
+.ed-layer--hannam .ed-layer__shade {
+  background: linear-gradient(115.98deg, rgba(0, 0, 0, 0) 64.63%, #000 88.33%);
+}
+
+/* ---------- 텍스트 레이어 ---------- */
+.ed-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.ed-slide {
+  position: absolute;
+  inset: 0;
+  will-change: opacity, transform, filter;
+}
+.ed-slide--dark  { color: var(--ink); }
+.ed-slide--light { color: var(--paper); }
+
+/* ---------------------------------------------------------
+   텍스트 — Figma 값 그대로 (Typography 패널 기준)
+   위치는 Figma 텍스트 박스 좌상단 좌표
+   --------------------------------------------------------- */
+
+/* EDITORIAL 0N — Helvetica Now Display Regular 14 / 16.8 / 0.84 @ (69, 90) */
+.ed-eyebrow {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(90 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: calc(16.8 * var(--u));
+  letter-spacing: calc(0.84 * var(--u));
+  white-space: nowrap;
+}
+
+/* 메인 타이틀 — Cormorant Garamond Medium 128 / 98 @ (59, 136) */
+.ed-title {
+  position: absolute;
+  left: calc(59 * var(--u));
+  top: calc(136 * var(--u));
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: calc(128 * var(--u));
+  line-height: calc(98 * var(--u));
+  text-transform: uppercase;
+}
+.ed-title__line {
+  display: block;
+  white-space: nowrap;
+  will-change: filter, opacity;
+}
+
+/* Figma 자간 (줄·글자별로 다름) */
+.ls-4 { letter-spacing: -0.04em; } /* -5.12px */
+.ls-5 { letter-spacing: -0.05em; } /* -6.40px */
+.ls-6 { letter-spacing: -0.06em; } /* -7.68px */
+.ls-7 { letter-spacing: -0.07em; } /* -8.96px */
+.ls-2 { letter-spacing: -0.02em; }
+.ls-p3 { letter-spacing: 0.03em; }
+.ls-08  { letter-spacing: -0.00625em; } /* -0.80px @128 */
+.ls-096 { letter-spacing: -0.0075em; }  /* -0.96px @128 */
+.ls-112 { letter-spacing: -0.00875em; } /* -1.12px @128 */
+
+/* Figma: 가운데 줄 IN — Layer blur 20 */
+.ed-title__line.is-soft {
+  filter: blur(calc(8 * var(--u)));
+}
+
+/* 좌하단 리드 카피 @ (69, 514 | 517)
+   1행 Helvetica Now Display Bold 16 / 2행 Regular 14 (한글 Pretendard Regular 14) */
+.ed-lede {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(var(--lede-top, 514) * var(--u));
+  white-space: nowrap;
+}
+.ed-lede p {
+  line-height: calc(var(--lede-lh, 22) * var(--u));
+}
+.ed-lede__strong {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: calc(16 * var(--u));
+  letter-spacing: 0;
+}
+.ed-lede__sub {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  letter-spacing: 0;
+}
+.ed-lede__sub.ko {
+  font-family: var(--font-ko);
+}
+.ed-lede__sub.ko-tight {
+  letter-spacing: calc(-0.28 * var(--u));
+}
+.ed-lede--tight .ed-lede__strong,
+.ed-lede--tight .ed-lede__sub { letter-spacing: calc(-0.16 * var(--u)); }
+.ed-slide[data-slide="intro"]  .ed-lede { --lede-top: 519; --lede-lh: 20; }
+
+/* 우하단 캡션 — 오른쪽 끝 x 1360 (right 80)
+   지역명 Helvetica Now Display Medium 18 / 21.6 @ y 500
+   설명문 Regular 12 / 14 @ y 532 */
+.ed-caption {
+  position: absolute;
+  right: calc(80 * var(--u));
+  top: calc(500 * var(--u));
+  text-align: right;
+  color: var(--paper);
+  white-space: nowrap;
+}
+.ed-caption__place {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: calc(18 * var(--u));
+  line-height: calc(21.6 * var(--u));
+  letter-spacing: 0;
+  margin-bottom: calc(10.4 * var(--u));
+}
+.ed-caption__text {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(12 * var(--u));
+  line-height: calc(14 * var(--u));
+  letter-spacing: 0;
+}
+
+/* =========================================================
+   HERO — Figma 1440 × 900
+   ========================================================= */
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 900;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #0b0b0b;
+  color: var(--paper);
+}
+.hero > * {
+  --u: calc(100cqw / 1440);
+}
+/* 히어로 전체가 사운드 토글 클릭 영역 — 항상 손가락 커서 */
+.hero { cursor: pointer; }
+
+/* 배경 — Figma 이미지 크롭(imageTransform) 그대로:
+   원본 1672×941 중 x 15.3~1483.4 / y 22.4~940 영역(1440:900 비율, 왜곡 없음)
+   → 표시 크기 1640 × 923, 위치 (-15, -22) */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+}
+.hero__img {
+  position: absolute;
+  display: block;
+  left: calc(-15 * var(--u));
+  top: calc(-22 * var(--u));
+  width: calc(1640 * var(--u));
+  aspect-ratio: 1672 / 941;
+  max-width: none;
+}
+/* 전환 후 배경 — Figma: 1920×1080, Fill(가운데 기준 cover) */
+.hero__img--next {
+  inset: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: 50% 50%;
+  opacity: 0;
+  /* Figma 프로토타입: Smart Animate · Ease In · 800ms */
+  transition: opacity 0.8s cubic-bezier(0.42, 0, 1, 1);
+}
+.hero.is-scene-2 .hero__img--next {
+  opacity: 1;
+}
+
+/* dim — Linear gradient (오른쪽 투명 → 왼쪽 검정), 레이어 불투명도 30% */
+.hero__dim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #000 35.99%, rgba(0, 0, 0, 0) 66.6%);
+  opacity: 0.3;
+}
+
+/* GNB — Helvetica Now Display Medium 12 / 14.4 @ y 46 */
+.gnb { position: absolute; inset: 0 0 auto 0; height: calc(80 * var(--u)); }
+.gnb a { color: inherit; text-decoration: none; }
+.gnb__logo {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(38 * var(--u));
+  width: calc(137 * var(--u));
+}
+.gnb__logo img { display: block; width: 100%; height: auto; }
+.gnb__item,
+.gnb__lang {
+  position: absolute;
+  top: calc(46 * var(--u));
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: calc(12 * var(--u));
+  line-height: calc(14.4 * var(--u));
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.gnb__item--editorial { left: calc(941 * var(--u)); }
+.gnb__item--runway    { left: calc(1037 * var(--u)); }
+.gnb__item--shop      { left: calc(1123 * var(--u)); }
+.gnb__item--about     { left: calc(1192 * var(--u)); }
+.gnb__lang            { left: calc(1325 * var(--u)); }
+
+/* F/W 2026 — CAMPAIGN — Regular 18 / 21.6 / 1.08 @ (69, 319) */
+.hero__eyebrow {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(319 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(18 * var(--u));
+  line-height: calc(21.6 * var(--u));
+  letter-spacing: calc(1.08 * var(--u));
+  white-space: nowrap;
+}
+
+/* SEOUL IN MOTION — Cormorant Garamond Medium 98 / 82 @ (62, 371) */
+.hero__title {
+  position: absolute;
+  left: calc(62 * var(--u));
+  top: calc(371 * var(--u));
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: calc(98 * var(--u));
+  line-height: calc(82 * var(--u));
+  letter-spacing: -0.04em;
+}
+.hero__line { display: block; white-space: nowrap; }
+
+/* Where the city shifts, style follows. — Regular 14 / 16.8 @ (70, 565) */
+.hero__sub {
+  position: absolute;
+  left: calc(70 * var(--u));
+  top: calc(565 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: calc(16.8 * var(--u));
+  white-space: nowrap;
+}
+
+/* SCROLL TO EXPLORE — Regular 14 / 16.8 @ (70, 669) + 화살표 11.2 × 40.15 @ (79.4, 706.55) */
+.hero__scroll {
+  position: absolute;
+  left: calc(70 * var(--u));
+  top: calc(669 * var(--u));
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: calc(16.8 * var(--u));
+  white-space: nowrap;
+}
+.hero__scroll span { display: block; }
+.hero__arrow {
+  position: absolute;
+  left: calc(9.4 * var(--u));
+  top: calc(37.55 * var(--u));
+  width: calc(11.2 * var(--u));
+  height: calc(40.15 * var(--u));
+}
+
+/* 영상 사운드 토글 — 스피커 아이콘, 01 / 04 와 같은 줄(바 중심 y 834) 오른쪽 끝 x 1370
+   아이콘 26px, 그림의 오른쪽 끝이 x 1370 에 맞도록 viewBox 여백(3/24) 만큼 보정 */
+.hero__sound {
+  position: absolute;
+  right: calc(66.75 * var(--u));
+  top: calc(821 * var(--u));
+  z-index: 2;
+  width: calc(26 * var(--u));
+  height: calc(26 * var(--u));
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.hero__sound:hover,
+.hero__sound:focus-visible { opacity: 1; }
+.hero__sound[hidden] { display: none; }
+.hero__sound svg { display: block; width: 100%; height: 100%; }
+.hero__sound[aria-pressed="true"]  .hero__sound-off,
+.hero__sound[aria-pressed="false"] .hero__sound-on { display: none; }
+
+/* 01 / 04 — Regular 12 / 14.4 @ (70, 826) + 바 4개 (42px, 간격 8px, 1px 라운드캡) @ x 146, y 834
+   비활성 바 opacity 0.2 */
+.hero__pager { position: absolute; inset: 0; pointer-events: none; }
+.hero__count {
+  position: absolute;
+  left: calc(70 * var(--u));
+  top: calc(826 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(12 * var(--u));
+  line-height: calc(14.4 * var(--u));
+  white-space: nowrap;
+}
+.hero__bar {
+  position: absolute;
+  top: calc(833.5 * var(--u));
+  width: calc(43 * var(--u)); /* 42 + 라운드캡 0.5 × 2 */
+  height: calc(1 * var(--u));
+  border-radius: calc(0.5 * var(--u));
+  background: var(--paper);
+  opacity: 0.2;
+}
+.hero__bar.is-active { opacity: 1; }
+.hero__bar:nth-of-type(1) { left: calc(145.5 * var(--u)); }
+.hero__bar:nth-of-type(2) { left: calc(195.5 * var(--u)); }
+.hero__bar:nth-of-type(3) { left: calc(245.5 * var(--u)); }
+.hero__bar:nth-of-type(4) { left: calc(295.5 * var(--u)); }
+
+/* =========================================================
+   RUNWAY — Figma 1440 × 900
+   ========================================================= */
+.runway {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 900;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #e2e9ec;
+  color: var(--ink);
+}
+.runway > * {
+  --u: calc(100cqw / 1440);
+}
+
+/* 영상 — 506 × 900 @ (452, 0) */
+.runway__video {
+  position: absolute;
+  left: calc(452 * var(--u));
+  top: 0;
+  width: calc(506 * var(--u));
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 가장자리 그라데이션 — 영상 위에 덮이므로 마우스 이벤트는 통과시킴 */
+.runway__fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+/* 좌: x 460 까지 단색 → 532 에서 투명 (Figma Rectangle 5) */
+.runway__fade--left {
+  background: linear-gradient(-90deg, rgba(223, 229, 232, 0) 63.056%, #dfe5e8 68.056%);
+}
+/* 우: 좌측 것을 180° 회전 (Figma Rectangle 6) */
+.runway__fade--right {
+  background: linear-gradient(90deg, rgba(223, 229, 232, 0) 63.056%, #dfe5e8 68.056%);
+}
+/* 상단 45px 띠 (Figma Rectangle 7) */
+.runway__fade--top {
+  bottom: auto;
+  height: calc(45 * var(--u));
+  background: linear-gradient(0deg, rgba(223, 229, 232, 0) 48.889%, #e0e6e9 76.667%);
+}
+/* 흰 빛 8% (Figma Rectangle 8, 180° 회전) */
+.runway__fade--glow {
+  opacity: 0.08;
+  background: linear-gradient(303.18deg, rgba(255, 255, 255, 0) 70.022%, #fff 91.064%);
+}
+
+/* 좌측 브랜드 — 가운데 정렬 기준 x 294
+   SCENE 로고 102 × 22.88 @ (242, 403)
+   RUNWAY Medium 42 @ y 425.57 / THE CITY WALKS. Medium 12 @ y 494.57 */
+.runway__brand {
+  position: absolute;
+  left: calc(294 * var(--u));
+  top: calc(403 * var(--u));
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+.runway__logo {
+  display: block;
+  width: calc(102 * var(--u));
+  height: auto;
+  margin: 0 auto;
+}
+.runway__title {
+  margin: calc(-0.31 * var(--u)) 0 0; /* 로고 하단 425.88 → 텍스트 상단 425.57 */
+  font-weight: 500;
+  font-size: calc(42 * var(--u));
+  line-height: calc(50 * var(--u));
+}
+.runway__tagline {
+  margin-top: calc(19 * var(--u)); /* 475.57 → 494.57 */
+  font-size: calc(12 * var(--u));
+  line-height: calc(14 * var(--u));
+}
+
+/* 우측 LOOK — 가운데 정렬 기준 x 1145
+   LOOK 01 Medium 16 @ y 422 / 설명 Regular 12 / 14 + 2행 10 / 12 @ y 453 */
+.runway__look {
+  position: absolute;
+  left: calc(1145 * var(--u));
+  top: calc(422 * var(--u));
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+}
+.runway__look-no {
+  font-weight: 500;
+  font-size: calc(16 * var(--u));
+  line-height: calc(19 * var(--u));
+}
+.runway__look-desc {
+  margin-top: calc(12 * var(--u)); /* 441 → 453 */
+  font-weight: 400;
+  font-size: calc(12 * var(--u));
+  line-height: calc(14 * var(--u));
+}
+.runway__look-items {
+  font-size: calc(10 * var(--u));
+  line-height: calc(12 * var(--u));
+}

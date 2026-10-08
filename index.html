@@ -188,9 +188,9 @@
 
   <!-- ================= RUNWAY (Figma 1440 × 900) ================= -->
   <section class="runway" id="runway" aria-label="Runway">
-    <!-- 가운데 세로 영상 506 × 900 @ x 452 — 무한 반복, 마우스를 올리면 정지 -->
+    <!-- 가운데 세로 영상 506 × 900 @ x 452 — 한 번만 재생 후 마지막 장면 고정(js/runway.js), 마우스를 올리면 정지 -->
     <video class="runway__video" src="assets/videos/runway.mp4" poster="assets/images/runway-poster.jpg"
-           muted loop playsinline autoplay preload="auto" aria-label="LOOK 01 런웨이 영상"></video>
+           muted playsinline autoplay preload="auto" aria-label="LOOK 01 런웨이 영상"></video>
 
     <!-- 영상 가장자리를 배경색으로 녹이는 그라데이션 (클릭/호버 통과) -->
     <div class="runway__fade runway__fade--left" aria-hidden="true"></div>
@@ -206,7 +206,10 @@
 
     <div class="runway__look">
       <p class="runway__look-no">LOOK 01</p>
-      <p class="runway__look-desc">EULJIRO AFTER HOURS<br />Leather / Sheer / Denim</p>
+      <div class="runway__look-desc">
+        <p>EULJIRO AFTER HOURS</p>
+        <p class="runway__look-items">Leather / Sheer / Denim</p>
+      </div>
     </div>
   </section>
   <!-- ================= /RUNWAY ================= -->
