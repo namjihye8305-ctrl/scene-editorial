@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCENE.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- 한글 보조 텍스트 — Figma: Pretendard Regular -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <link rel="preload" as="image" href="assets/images/hero.jpg" />
+  <link rel="preload" as="image" href="assets/images/seongsu.jpg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ================= HERO (Figma 1440 × 900) ================= -->
+  <header class="hero" id="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <img class="hero__img" src="assets/images/hero.jpg" alt="" />
+      <!-- Figma 프로토타입: 1.5초 후 Smart Animate(Ease In, 0.8초)로 전환되는 배경 영상
+           poster = Figma에 들어간 영상 첫 장면 (영상 로딩 전·재생 불가 시 표시) -->
+      <video class="hero__img hero__img--next hero__video" src="assets/videos/hero.mp4" poster="assets/images/hero-2.jpg"
+             loop playsinline preload="auto"></video>
+      <div class="hero__dim"></div>
+    </div>
+
+    <nav class="gnb" aria-label="주요 메뉴">
+      <a class="gnb__logo" href="#hero"><img src="assets/images/logo-scene.svg" alt="SCENE." /></a>
+      <a class="gnb__item gnb__item--editorial" href="#editorial">EDITORIAL</a>
+      <a class="gnb__item gnb__item--runway" href="#runway">RUNWAY</a>
+      <a class="gnb__item gnb__item--shop" href="#shop">SHOP</a>
+      <a class="gnb__item gnb__item--about" href="#about">ABOUT</a>
+      <p class="gnb__lang">KR&nbsp; /&nbsp; EN</p>
+    </nav>
+
+    <p class="hero__eyebrow">F/W 2026&nbsp; —&nbsp; CAMPAIGN</p>
+    <h1 class="hero__title">
+      <span class="hero__line"><span class="ls-4">SEO</span><span class="ls-p3">UL</span></span>
+      <span class="hero__line"><span class="ls-4">IN MO</span><span class="ls-2">T</span><span class="ls-5">ION</span></span>
+    </h1>
+    <p class="hero__sub">Where the city shifts, style follows.</p>
+
+    <a class="hero__scroll" href="#editorial">
+      <span>SCROLL TO EXPLORE</span>
+      <img class="hero__arrow" src="assets/images/arrow-down.svg" alt="" />
+    </a>
+
+    <!-- 사운드 토글 — 01 / 04 와 같은 줄, 오른쪽 끝 정렬 -->
+    <button class="hero__sound" type="button" aria-label="소리 켜기" aria-pressed="false" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" />
+        <g class="hero__sound-on">
+          <path d="M15.5 9.2a4 4 0 0 1 0 5.6" />
+          <path d="M18 6.8a7.5 7.5 0 0 1 0 10.4" />
+        </g>
+        <g class="hero__sound-off">
+          <path d="M16 9.5l5 5M21 9.5l-5 5" />
+        </g>
+      </svg>
+    </button>
+
+    <div class="hero__pager">
+      <p class="hero__count">01&nbsp; /&nbsp; 04</p>
+      <span class="hero__bar is-active"></span>
+      <span class="hero__bar"></span>
+      <span class="hero__bar"></span>
+      <span class="hero__bar"></span>
+    </div>
+  </header>
+  <!-- ================= /HERO ================= -->
+
+  <!-- Figma: HERO 바로 아래 EDITORIAL (여백 0) -->
+
+  <!-- ================= EDITORIAL ================= -->
+  <section class="editorial" id="editorial" aria-label="Editorial — Seoul in three moods">
+
+    <!-- 이미지 레이어 (아래 → 위 순서로 쌓임) -->
+    <div class="ed-media" aria-hidden="true">
+      <div class="ed-layer ed-layer--seongsu" data-layer="seongsu">
+        <div class="ed-layer__frame">
+          <img class="ed-layer__img" src="assets/images/seongsu.jpg" alt="" />
+        </div>
+        <div class="ed-layer__veil"></div>
+        <div class="ed-layer__shade"></div>
+      </div>
+      <div class="ed-layer ed-layer--euljiro" data-layer="euljiro">
+        <div class="ed-layer__frame">
+          <img class="ed-layer__img" src="assets/images/euljiro.jpg" alt="" />
+        </div>
+        <div class="ed-layer__veil"></div>
+        <div class="ed-layer__shade"></div>
+      </div>
+      <div class="ed-layer ed-layer--hannam" data-layer="hannam">
+        <div class="ed-layer__frame">
+          <img class="ed-layer__img" src="assets/images/hannam.jpg" alt="" />
+        </div>
+        <!-- Figma Rectangle 4: 왼쪽 75px 띠 (같은 사진을 가로로 늘려 덮음) -->
+        <div class="ed-layer__patch"><img src="assets/images/hannam.jpg" alt="" /></div>
+        <div class="ed-layer__veil"></div>
+        <div class="ed-layer__shade"></div>
+      </div>
+    </div>
+
+    <!-- 텍스트 레이어 (실제 HTML 텍스트) -->
+    <div class="ed-copy">
+
+      <!-- STAGE 01 — INTRO -->
+      <article class="ed-slide ed-slide--dark" data-slide="intro">
+        <p class="ed-eyebrow">EDITORIAL 01</p>
+        <h2 class="ed-title">
+          <span class="ed-title__line ls-4"><span class="ls-08">SEO</span>UL</span>
+          <span class="ed-title__line ls-4 js-intro-blur">IN THR<span class="ls-096">EE</span></span>
+          <span class="ed-title__line ls-6">M<span class="ls-08">OO</span>DS</span>
+        </h2>
+        <div class="ed-lede">
+          <p class="ed-lede__strong">Concrete. Rain. Movement.</p>
+          <p class="ed-lede__sub">A city read through rain, neon, and light.</p>
+        </div>
+        <div class="ed-caption">
+          <p class="ed-caption__place">SEONGSU</p>
+          <p class="ed-caption__text">CONCRETE.&nbsp; RAIN.&nbsp; MOVEMENT.<br />Where the city feels rawest.</p>
+        </div>
+      </article>
+
+      <!-- STAGE 02 — SEONGSU IN RAIN -->
+      <article class="ed-slide ed-slide--dark" data-slide="seongsu">
+        <p class="ed-eyebrow">EDITORIAL 01</p>
+        <h2 class="ed-title">
+          <span class="ed-title__line ls-6">SEONGSU</span>
+          <span class="ed-title__line ls-4 is-soft">IN</span>
+          <span class="ed-title__line ls-6">RAIN</span>
+        </h2>
+        <div class="ed-lede">
+          <p class="ed-lede__strong">Concrete. Rain. Movement.</p>
+          <p class="ed-lede__sub ko ko-tight">젖은 콘크리트와 거친 질감, 움직임이 살아 있는 성수</p>
+        </div>
+        <div class="ed-caption">
+          <p class="ed-caption__place">SEONGSU</p>
+          <p class="ed-caption__text">CONCRETE.&nbsp; RAIN.&nbsp; MOVEMENT.<br />Where the city feels rawest.</p>
+        </div>
+      </article>
+
+      <!-- STAGE 03 — EULJIRO AT NIGHT -->
+      <article class="ed-slide ed-slide--light" data-slide="euljiro">
+        <p class="ed-eyebrow">EDITORIAL 02</p>
+        <h2 class="ed-title">
+          <span class="ed-title__line ls-4">EULJIRO</span>
+          <span class="ed-title__line ls-4">AT</span>
+          <span class="ed-title__line ls-4">N<span class="ls-096">IG</span>HT</span>
+        </h2>
+        <div class="ed-lede ed-lede--tight">
+          <p class="ed-lede__strong">Neon shadows. After rain. After hours.</p>
+          <p class="ed-lede__sub ko">붉은 네온과 젖은 골목, 밤의 긴장감</p>
+        </div>
+        <div class="ed-caption">
+          <p class="ed-caption__place">EULJIRO</p>
+          <p class="ed-caption__text">NEON. SHADOW. AFTER HOURS.<br />Where the city changes after dark.</p>
+        </div>
+      </article>
+
+      <!-- STAGE 04 — HANNAM IN LIGHT -->
+      <article class="ed-slide ed-slide--dark" data-slide="hannam">
+        <p class="ed-eyebrow">EDITORIAL 03</p>
+        <h2 class="ed-title">
+          <span class="ed-title__line ls-5">HANNAM</span>
+          <!-- Figma editorial 4 → 5: 스크롤 마지막에 IN 블러가 풀림 (js-hannam-in) -->
+          <span class="ed-title__line ls-4 is-soft js-hannam-in">IN</span>
+          <span class="ed-title__line ls-6"><span class="ls-112">LIG</span>HT</span>
+        </h2>
+        <div class="ed-lede">
+          <p class="ed-lede__strong">Light. Space. Restraint.</p>
+          <p class="ed-lede__sub ko">밝은 자연광과 정제된 여백, 조용한 무드</p>
+        </div>
+        <div class="ed-caption">
+          <p class="ed-caption__place">HANNAM</p>
+          <p class="ed-caption__text">LIGHT. SPACE. RESTRAINT.<br />Where the city slows down.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+  <!-- ================= /EDITORIAL ================= -->
+
+  <!-- ================= RUNWAY (Figma 1440 × 900) ================= -->
+  <section class="runway" id="runway" aria-label="Runway">
+    <!-- 가운데 세로 영상 506 × 900 @ x 452 — 무한 반복, 마우스를 올리면 정지 -->
+    <video class="runway__video" src="assets/videos/runway.mp4" poster="assets/images/runway-poster.jpg"
+           muted loop playsinline autoplay preload="auto" aria-label="LOOK 01 런웨이 영상"></video>
+
+    <!-- 영상 가장자리를 배경색으로 녹이는 그라데이션 (클릭/호버 통과) -->
+    <div class="runway__fade runway__fade--left" aria-hidden="true"></div>
+    <div class="runway__fade runway__fade--right" aria-hidden="true"></div>
+    <div class="runway__fade runway__fade--top" aria-hidden="true"></div>
+    <div class="runway__fade runway__fade--glow" aria-hidden="true"></div>
+
+    <div class="runway__brand">
+      <img class="runway__logo" src="assets/images/logo-scene-dark.svg" alt="SCENE." />
+      <h2 class="runway__title">RUNWAY</h2>
+      <p class="runway__tagline">THE CITY WALKS.</p>
+    </div>
+
+    <div class="runway__look">
+      <p class="runway__look-no">LOOK 01</p>
+      <p class="runway__look-desc">EULJIRO AFTER HOURS<br />Leather / Sheer / Denim</p>
+    </div>
+  </section>
+  <!-- ================= /RUNWAY ================= -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/hero.js"></script>
+  <script src="js/editorial.js"></script>
+  <script src="js/runway.js"></script>
+</body>
+</html>
