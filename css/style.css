@@ -930,31 +930,31 @@ p { margin: 0; }
   }
   .runway__fade { display: none; }
 
-  .runway__logo { width: 84px; }
+  .runway__logo { width: 96px; }
   .runway__title {
     margin-top: 0;
-    font-size: 36px;
-    line-height: 42px;
+    font-size: 42px;
+    line-height: 48px;
   }
   .runway__tagline {
-    margin-top: 10px;
-    font-size: 11px;
-    line-height: 13px;
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 15px;
   }
 
-  .runway__look { margin-top: 20px; }
+  .runway__look { margin-top: 22px; }
   .runway__look-no {
-    font-size: 15px;
-    line-height: 18px;
+    font-size: 17px;
+    line-height: 20px;
   }
   .runway__look-desc {
-    margin-top: 8px;
-    font-size: 12px;
-    line-height: 14px;
+    margin-top: 9px;
+    font-size: 13px;
+    line-height: 16px;
   }
   .runway__look-items {
-    font-size: 10px;
-    line-height: 12px;
+    font-size: 11px;
+    line-height: 14px;
   }
 }
 
