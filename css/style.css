@@ -834,8 +834,8 @@ p { margin: 0; }
     height: calc(var(--ed-text-h) + 160px);
     opacity: 1;
     background: linear-gradient(0deg,
-      rgb(var(--ed-tone) / 0.72) 0%,
-      rgb(var(--ed-tone) / 0.58) calc(100% - 160px),
+      rgb(var(--ed-tone) / 0.6) 0%,
+      rgb(var(--ed-tone) / 0.45) calc(100% - 160px),
       rgb(var(--ed-tone) / 0) 100%);
   }
   .ed-layer .ed-layer__shade,
