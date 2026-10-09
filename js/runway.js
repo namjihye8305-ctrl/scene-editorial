@@ -53,10 +53,26 @@
       return;
     }
     if (lastPointer !== "mouse") {
+      // 자동재생이 막혀 멈춰 있던 경우(사용자가 멈춘 게 아님) → 탭하면 재생
+      if (video.paused && !tapPaused) return sync();
       tapPaused = !tapPaused;
       sync();
     }
   });
+
+  // 음소거 자동재생 조건을 속성으로도 확실히 (일부 모바일 브라우저는 속성값만 확인)
+  video.muted = true;
+  video.defaultMuted = true;
+
+  // 자동재생이 막힌 환경(저전력 모드, 앱 내 브라우저 등): 화면을 처음 터치하는 순간 재생
+  // 영상 자체를 탭한 경우는 위의 탭 정지/재생이 처리하므로 제외. 한 번 재생되면 해제
+  const events = ["touchend", "pointerup", "keydown"];
+  const kick = (e) => {
+    if (e.target === video) return;
+    if (inView && video.paused && !video.ended && !hovering && !tapPaused) sync();
+  };
+  events.forEach((t) => document.addEventListener(t, kick, true));
+  video.addEventListener("playing", () => events.forEach((t) => document.removeEventListener(t, kick, true)), { once: true });
 
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(([entry]) => {

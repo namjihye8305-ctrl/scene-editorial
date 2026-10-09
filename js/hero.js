@@ -62,12 +62,41 @@
   };
   // 모바일(767px 이하)은 음소거 자동재생으로 시작 — 히어로나 스피커를 누르면 소리 켜짐
   // PC 는 기존대로 소리 켠 채 재생을 먼저 시도
-  setMuted(window.matchMedia("(max-width: 767px)").matches);
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  setMuted(isMobile);
+
+  if (video && isMobile) {
+    // iOS Safari·데이터 절약 모드는 preload 를 무시하고 play() 전까지 영상을 받지 않음
+    // → 사진이 보이는 동안(영상은 투명) 음소거로 미리 재생해 첫 프레임을 준비해 둠
+    video.defaultMuted = true;
+    video.setAttribute("muted", "");
+    playSafe();
+  }
+
+  // 자동재생이 막힌 환경(저전력 모드, 앱 내 브라우저 등): 화면을 처음 터치하는 순간 재생
+  if (video) {
+    const events = ["touchend", "pointerup", "keydown"];
+    const stop = () => events.forEach((t) => document.removeEventListener(t, kick, true));
+    function kick() {
+      if (!video.paused) return stop();          // 이미 재생 중이면 더 할 일 없음
+      if (started || isMobile) playSafe();        // PC 는 전환 전 미리 재생하지 않음 (기존 동작 유지)
+      if (started) stop();
+    }
+    events.forEach((t) => document.addEventListener(t, kick, true));
+  }
+
+  // 영상 첫 프레임이 끝내 준비되지 않아도(모바일 등) 최대 3초 후엔 전환 진행 — 영상 로딩 전엔 poster 가 보임
+  const videoReady = video
+    ? Promise.race([
+        whenReady(video, "loadeddata", () => video.readyState >= 2),
+        new Promise((r) => setTimeout(r, 3000)),
+      ])
+    : Promise.resolve();
 
   // 첫 사진과 영상 첫 프레임이 준비된 뒤부터 1.5초를 셈 (빈 화면이 페이드인되는 것 방지)
   Promise.all([
     whenReady(photo, "load", () => photo.complete),
-    video ? whenReady(video, "loadeddata", () => video.readyState >= 2) : Promise.resolve(),
+    videoReady,
   ]).then(() => {
     setTimeout(() => {
       if (video) {
