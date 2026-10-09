@@ -66,6 +66,9 @@
   setMuted(isMobile);
 
   if (video && isMobile) {
+    // 모바일은 화면에 보이는 가운데 세로 부분만 잘라낸 가벼운 영상(608×1080, 원본의 약 45%) 사용
+    // → 1.5초 뒤 전환 시점에 이미 재생 중이도록
+    video.src = "assets/videos/hero-mobile.mp4";
     // iOS Safari·데이터 절약 모드는 preload 를 무시하고 play() 전까지 영상을 받지 않음
     // → 사진이 보이는 동안(영상은 투명) 음소거로 미리 재생해 첫 프레임을 준비해 둠
     video.defaultMuted = true;
