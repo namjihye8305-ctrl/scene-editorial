@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SCENE.</title>
+  <!-- 탭 아이콘 없음 — 브라우저의 /favicon.ico 자동 요청(404) 방지 -->
+  <link rel="icon" href="data:," />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,6 +18,20 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
+  <!-- ================= MOBILE NAV (767px 이하에서만 표시) =================
+       .hero 는 container-type 으로 fixed 기준이 히어로가 되므로 body 바로 아래에 둠 -->
+  <button class="mnav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mnav">
+    <span></span><span></span>
+  </button>
+  <nav class="mnav" id="mnav" aria-label="모바일 메뉴">
+    <ul>
+      <li><a href="#hero">HERO</a></li>
+      <li><a href="#editorial">EDITORIAL</a></li>
+      <li><a href="#runway">RUNWAY</a></li>
+    </ul>
+  </nav>
+  <!-- ================= /MOBILE NAV ================= -->
 
   <!-- ================= HERO (Figma 1440 × 900) ================= -->
   <header class="hero" id="hero">
@@ -219,5 +235,6 @@
   <script src="js/hero.js"></script>
   <script src="js/editorial.js"></script>
   <script src="js/runway.js"></script>
+  <script src="js/menu.js"></script>
 </body>
 </html>

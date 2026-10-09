@@ -623,3 +623,334 @@ p { margin: 0; }
   font-size: calc(10 * var(--u));
   line-height: calc(12 * var(--u));
 }
+
+/* =========================================================
+   MOBILE (MO) — 767px 이하 전용
+   기준 너비 390px / 320px 까지 대응
+   PC(768px~) 레이아웃은 위 규칙 그대로 — 아래는 모두 미디어쿼리 안에서만 덮어씀
+   ========================================================= */
+
+/* 모바일 메뉴 — PC 에서는 숨김 */
+.mnav-toggle,
+.mnav { display: none; }
+
+@media (max-width: 767px) {
+  body { overflow-x: clip; } /* 가로 스크롤 방지 (스크롤 컨테이너를 만들지 않아 ScrollTrigger 고정에 영향 없음) */
+
+  /* ---------- MOBILE NAV ---------- */
+  .mnav-toggle {
+    display: block;
+    position: fixed;
+    top: 14px;
+    right: 10px;
+    z-index: 1001;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    mix-blend-mode: difference; /* 어두운 배경에선 흰색, 밝은 배경(에디토리얼·런웨이)에선 검정으로 보임 */
+  }
+  .mnav-toggle span {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 1.2px;
+    background: currentColor;
+    transition: top 0.3s ease, transform 0.3s ease;
+  }
+  .mnav-toggle span:nth-child(1) { top: 18px; }
+  .mnav-toggle span:nth-child(2) { top: 25px; }
+  .is-mnav-open .mnav-toggle span:nth-child(1) { top: 21.4px; transform: rotate(45deg); }
+  .is-mnav-open .mnav-toggle span:nth-child(2) { top: 21.4px; transform: rotate(-45deg); }
+
+  .mnav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding: 0 20px;
+    background: rgba(11, 11, 11, 0.97);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  }
+  .is-mnav-open .mnav { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+  html.is-mnav-open { overflow: hidden; }
+  .mnav ul { list-style: none; margin: 0; padding: 0; }
+  .mnav a {
+    display: block;
+    padding: 4px 0;
+    color: var(--paper);
+    text-decoration: none;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(40px, 12vw, 64px);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  /* ---------- HERO ----------
+     화면 높이를 채우는 세로 화면. 텍스트는 아래에서부터 쌓음
+     (아래 → 위) 페이저 32 · SCROLL 104 · 서브카피 150 · 타이틀 190 · 캠페인 */
+  .hero {
+    aspect-ratio: auto;
+    height: 100vh;
+    height: 100svh;
+    min-height: 560px;
+    --hero-fs: clamp(48px, 17vw, 104px);
+  }
+  /* 배경 — 세로 크롭, 모델 얼굴이 가운데 오도록 (사진: 가로 52% / 영상: 49% 지점) */
+  .hero__img {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: 53% 50%;
+  }
+  .hero__img--next { object-position: 49% 50%; }
+  /* dim — 텍스트가 아래에 모이므로 아래 → 위 방향으로 */
+  .hero__dim {
+    background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0) 62%);
+    opacity: 0.55;
+  }
+
+  .gnb { height: auto; }
+  .gnb__logo { left: 20px; top: 24px; width: 96px; }
+  .gnb__item,
+  .gnb__lang { display: none; }
+
+  .hero__eyebrow {
+    left: 20px;
+    top: auto;
+    bottom: calc(208px + var(--hero-fs) * 1.6735);
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.06em;
+  }
+  .hero__title {
+    left: calc(20px - var(--hero-fs) * 0.07); /* 세리프 글자 왼쪽 여백 보정 (PC 62 / 텍스트 69 와 같은 비율) */
+    top: auto;
+    bottom: 190px;
+    font-size: var(--hero-fs);
+    line-height: calc(var(--hero-fs) * 0.8367);
+  }
+  .hero__sub {
+    left: 20px;
+    top: auto;
+    bottom: 150px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .hero__scroll {
+    left: 20px;
+    top: auto;
+    bottom: 104px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .hero__arrow {
+    left: 7px;
+    top: calc(100% + 8px);
+    width: 8.4px;
+    height: 30px;
+  }
+
+  .hero__count {
+    left: 20px;
+    top: auto;
+    bottom: 32px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .hero__bar {
+    top: auto;
+    bottom: 38.5px;
+    width: 29px; /* 28 + 라운드캡 */
+    height: 1px;
+    border-radius: 0.5px;
+  }
+  .hero__bar:nth-of-type(1) { left: 75.5px; }
+  .hero__bar:nth-of-type(2) { left: 109.5px; }
+  .hero__bar:nth-of-type(3) { left: 143.5px; }
+  .hero__bar:nth-of-type(4) { left: 177.5px; }
+
+  .hero__sound {
+    right: 16px;
+    top: auto;
+    bottom: 26px; /* 아이콘 가운데 = 페이저 바 높이 */
+    width: 26px;
+    height: 26px;
+  }
+
+  /* ---------- EDITORIAL ----------
+     화면 높이로 고정(스크롤 애니메이션은 PC 와 동일)
+     위: 단색 영역 + 캠페인 / 타이틀 / 리드 카피 — 아래: 사진(세로 크롭) + 캡션
+     PC 의 "왼쪽 단색 → 오른쪽 사진" 구성을 "위 → 아래" 로 바꾼 형태 */
+  .editorial {
+    aspect-ratio: auto;
+    height: 100vh;
+    height: 100svh;
+    min-height: 560px;
+    --ed-fs: clamp(44px, 16.5vw, 96px);
+    --ed-lh: calc(var(--ed-fs) * 0.766);              /* PC 128 / 98 비율 */
+    --ed-img-top: calc(192px + var(--ed-lh) * 3);     /* 사진 시작 위치 = 타이틀 3줄 + 리드 카피 아래 */
+  }
+
+  .ed-layer { background: var(--ed-tone); }
+  .ed-layer--seongsu { --ed-tone: #dddddd; }
+  .ed-layer--euljiro { --ed-tone: #0b0b0b; }
+  .ed-layer--hannam  { --ed-tone: #cbb9b0; } /* PC 의 한남 벽 + 베이지 45% 를 합친 톤 */
+
+  .ed-layer__frame {
+    left: 0;
+    right: 0;
+    top: var(--ed-img-top);
+    bottom: 0;
+    width: auto;
+    aspect-ratio: auto;
+  }
+  /* 모델 얼굴이 보이도록 가로 위치 (성수 61% / 을지로 52% / 한남 64% 지점) */
+  .ed-layer--seongsu .ed-layer__img { object-position: 69% 30%; }
+  .ed-layer--euljiro .ed-layer__img { object-position: 53% 30%; }
+  .ed-layer--hannam  .ed-layer__img { object-position: 74% 30%; }
+
+  /* 단색 영역 → 사진으로 120px 에 걸쳐 녹아듦 */
+  .ed-layer .ed-layer__veil {
+    left: 0;
+    width: 100%;
+    top: 0;
+    bottom: auto;
+    height: calc(var(--ed-img-top) + 120px);
+    opacity: 1;
+    background: linear-gradient(180deg, var(--ed-tone) calc(100% - 120px), transparent 100%);
+  }
+  /* 아래 어둡게 — 흰색 캡션 가독성 (PC 의 오른쪽 어둡게를 아래쪽으로) */
+  .ed-layer .ed-layer__shade {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    height: 40%;
+    opacity: 0.55;
+    background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  .ed-layer__patch { display: none; }
+
+  .ed-eyebrow {
+    left: 20px;
+    top: 64px;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.06em;
+  }
+  .ed-title {
+    left: calc(20px - var(--ed-fs) * 0.078); /* PC 59 / 텍스트 69 와 같은 비율 */
+    top: 92px; /* 캠페인 하단 78 + 0.21em (PC 와 같은 비율) */
+    font-size: var(--ed-fs);
+    line-height: var(--ed-lh);
+  }
+  .ed-title__line.is-soft { filter: blur(6px); }
+
+  .ed-lede {
+    left: 20px;
+    right: 20px;
+    top: calc(110px + var(--ed-lh) * 3);
+    white-space: normal;
+  }
+  .ed-lede p { line-height: 20px; }
+  .ed-lede__strong { font-size: 15px; }
+  .ed-lede__sub { font-size: 13px; }
+  .ed-lede__sub.ko-tight { letter-spacing: -0.02em; }
+  .ed-lede--tight .ed-lede__strong,
+  .ed-lede--tight .ed-lede__sub { letter-spacing: -0.01em; }
+
+  .ed-caption {
+    right: 20px;
+    top: auto;
+    bottom: 28px;
+  }
+  .ed-caption__place {
+    font-size: 15px;
+    line-height: 18px;
+    margin-bottom: 6px;
+  }
+  .ed-caption__text {
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+  /* ---------- RUNWAY ----------
+     위에서 아래로: SCENE. RUNWAY → 영상(전신, 9:16) → LOOK 01 */
+  .runway {
+    aspect-ratio: auto;
+    min-height: 100vh;
+    min-height: 100svh; /* 최소 한 화면 — 메뉴의 RUNWAY 로 이동하면 화면 맨 위에 맞춰짐 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 72px 20px 56px;
+  }
+  .runway__brand,
+  .runway__look {
+    position: static;
+    transform: none;
+  }
+  .runway__brand { order: 1; }
+  .runway__video { order: 2; }
+  .runway__look  { order: 3; }
+
+  .runway__video {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(76vw, 380px);
+    height: auto;
+    aspect-ratio: 9 / 16;
+    margin-top: 28px;
+    /* PC 의 가장자리 그라데이션 대신 영상 가장자리를 배경색으로 녹임 */
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 6%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 6%);
+    mask-composite: intersect;
+  }
+  .runway__fade { display: none; }
+
+  .runway__logo { width: 84px; }
+  .runway__title {
+    margin-top: 0;
+    font-size: 36px;
+    line-height: 42px;
+  }
+  .runway__tagline {
+    margin-top: 10px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .runway__look { margin-top: 20px; }
+  .runway__look-no {
+    font-size: 15px;
+    line-height: 18px;
+  }
+  .runway__look-desc {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .runway__look-items {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}

@@ -60,7 +60,9 @@
       playSafe(); // 그래도 막히면 poster 이미지로 전환은 진행
     });
   };
-  setMuted(false);
+  // 모바일(767px 이하)은 음소거 자동재생으로 시작 — 히어로나 스피커를 누르면 소리 켜짐
+  // PC 는 기존대로 소리 켠 채 재생을 먼저 시도
+  setMuted(window.matchMedia("(max-width: 767px)").matches);
 
   // 첫 사진과 영상 첫 프레임이 준비된 뒤부터 1.5초를 셈 (빈 화면이 페이드인되는 것 방지)
   Promise.all([

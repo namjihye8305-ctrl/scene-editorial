@@ -5,6 +5,8 @@
    ========================================================= */
 (() => {
   gsap.registerPlugin(ScrollTrigger);
+  // 모바일에서 주소창이 접히고 펴질 때마다 고정 위치를 다시 계산해 화면이 튀는 것 방지
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   const section = document.querySelector("#editorial");
   if (!section) return;
