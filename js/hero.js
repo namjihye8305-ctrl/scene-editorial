@@ -7,8 +7,7 @@
   const hero = document.querySelector("#hero");
   if (!hero) return;
 
-  // Figma: After delay 1.5s — PC(768px~)는 1초 앞당겨 0.5초 뒤 전환, 모바일은 1.5초 유지
-  const DELAY = window.matchMedia("(max-width: 767px)").matches ? 1500 : 500;
+  const DELAY = 500; // Figma 의 After delay 1.5s 에서 1초 앞당김 (PC·모바일 공통, 클릭 없이 자동 전환)
   const photo = hero.querySelector("img.hero__img");
   const video = hero.querySelector(".hero__video");
 
@@ -22,7 +21,7 @@
   // 사운드: 브라우저가 소리 있는 자동재생을 막으면 음소거로 재생하고,
   // 히어로 영역 클릭 / 스피커 버튼 클릭마다 소리 켜기 ↔ 끄기 토글 (아이콘은 상태에 맞춰 바뀜)
   const soundBtn = hero.querySelector(".hero__sound");
-  let started = false; // 영상 재생 시작 여부 (1.5초 후)
+  let started = false; // 영상 재생 시작 여부 (전환 시점부터 true)
   const setMuted = (m) => {
     if (!video) return;
     video.muted = m;
@@ -68,7 +67,7 @@
 
   if (video && isMobile) {
     // 모바일은 화면에 보이는 가운데 세로 부분만 잘라낸 가벼운 영상(608×1080, 원본의 약 45%) 사용
-    // → 1.5초 뒤 전환 시점에 이미 재생 중이도록
+    // → 0.5초 뒤 전환 시점에 이미 재생 중이도록
     video.src = "assets/videos/hero-mobile.mp4";
     // iOS Safari·데이터 절약 모드는 preload 를 무시하고 play() 전까지 영상을 받지 않음
     // → 사진이 보이는 동안(영상은 투명) 음소거로 미리 재생해 첫 프레임을 준비해 둠
