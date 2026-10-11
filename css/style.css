@@ -854,6 +854,7 @@ p { margin: 0; }
   line-height: calc(20 * var(--u));
   white-space: nowrap;
 }
+.about__desc .br-mo { display: none; } /* 모바일 전용 줄바꿈 */
 /* Creative Direction | … — Regular 12 / 20 @ (69, 550) */
 .about__credits {
   position: absolute;
@@ -1445,7 +1446,9 @@ html.is-qv-open { overflow: hidden; }
     white-space: normal;
     word-break: keep-all;
   }
-  .about__desc br { display: none; }
+  /* 줄바꿈: …연결한 SCENE.은 / AI 비주얼과 … 결합한 / 개인 프로젝트입니다. */
+  .about__desc .br-pc { display: none; }
+  .about__desc .br-mo { display: inline; }
   .about__credits {
     margin-top: 24px;
     font-size: 11px;
@@ -1514,4 +1517,9 @@ html.is-qv-open { overflow: hidden; }
 /* 소형 모바일(359px 이하) — 을지로 리드 카피 1행이 두 줄로 넘어가므로 리드 영역 3줄 확보 */
 @media (max-width: 359px) {
   .editorial { --ed-lede-h: 60px; }
+}
+
+/* 374px 이하 — ABOUT 설명 첫 줄(…연결한 SCENE.은)이 한 줄에 들어가지 않으므로 AI 앞 줄바꿈을 끄고 자연 줄바꿈 */
+@media (max-width: 374px) {
+  .about__desc .br-mo { display: none; }
 }
