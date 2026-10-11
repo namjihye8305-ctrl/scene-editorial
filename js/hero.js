@@ -7,7 +7,8 @@
   const hero = document.querySelector("#hero");
   if (!hero) return;
 
-  const DELAY = 1500; // Figma: After delay 1.5s
+  // Figma: After delay 1.5s — PC(768px~)는 1초 앞당겨 0.5초 뒤 전환, 모바일은 1.5초 유지
+  const DELAY = window.matchMedia("(max-width: 767px)").matches ? 1500 : 500;
   const photo = hero.querySelector("img.hero__img");
   const video = hero.querySelector(".hero__video");
 
@@ -96,7 +97,7 @@
       ])
     : Promise.resolve();
 
-  // 첫 사진과 영상 첫 프레임이 준비된 뒤부터 1.5초를 셈 (빈 화면이 페이드인되는 것 방지)
+  // 첫 사진과 영상 첫 프레임이 준비된 뒤부터 DELAY 를 셈 (빈 화면이 페이드인되는 것 방지)
   Promise.all([
     whenReady(photo, "load", () => photo.complete),
     videoReady,
