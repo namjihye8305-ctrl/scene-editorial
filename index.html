@@ -29,6 +29,8 @@
       <li><a href="#hero">HERO</a></li>
       <li><a href="#editorial">EDITORIAL</a></li>
       <li><a href="#runway">RUNWAY</a></li>
+      <li><a href="#shop">SHOP</a></li>
+      <li><a href="#about">ABOUT</a></li>
     </ul>
   </nav>
   <!-- ================= /MOBILE NAV ================= -->
@@ -230,11 +232,98 @@
   </section>
   <!-- ================= /RUNWAY ================= -->
 
+  <!-- ================= SHOP THE LOOK (Figma 1440 × 610) ================= -->
+  <section class="shop" id="shop" aria-label="Shop the look">
+    <div class="shop__intro">
+      <h2 class="shop__title">SHOP<br />THE LOOK</h2>
+      <p class="shop__sub">런웨이 속 아이템을 만나보세요.</p>
+      <!-- 버튼이 아닌 사용 방법 안내 문구 (PC: DRAG / MO: SWIPE) -->
+      <p class="shop__hint">
+        <span><span class="shop__hint-pc">DRAG</span><span class="shop__hint-mo">SWIPE</span> TO EXPLORE</span>
+        <img src="assets/images/arrows-lr.svg" alt="" />
+      </p>
+    </div>
+
+    <!-- 가로 캐러셀 — PC 마우스 드래그·트랙패드 / MO 스와이프 (js/shop.js), 카드 클릭 시 Quick View -->
+    <div class="shop__track">
+      <button class="shop-card" type="button" data-item="0" aria-haspopup="dialog">
+        <img class="shop-card__img" src="assets/images/shop-01-leather-jacket.png" alt="" draggable="false" />
+        <span class="shop-card__no">01</span>
+        <span class="shop-card__name">Leather Jacket</span>
+        <img class="shop-card__arrow" src="assets/images/arrow-right.svg" alt="" draggable="false" />
+      </button>
+      <button class="shop-card" type="button" data-item="1" aria-haspopup="dialog">
+        <img class="shop-card__img" src="assets/images/shop-02-layered-top.png" alt="" draggable="false" />
+        <span class="shop-card__no">02</span>
+        <span class="shop-card__name">Layered Top</span>
+        <img class="shop-card__arrow" src="assets/images/arrow-right.svg" alt="" draggable="false" />
+      </button>
+      <button class="shop-card" type="button" data-item="2" aria-haspopup="dialog">
+        <img class="shop-card__img" src="assets/images/shop-03-cargo-pants.png" alt="" draggable="false" />
+        <span class="shop-card__no">03</span>
+        <span class="shop-card__name">Cargo Pants</span>
+        <img class="shop-card__arrow" src="assets/images/arrow-right.svg" alt="" draggable="false" />
+      </button>
+      <button class="shop-card" type="button" data-item="3" aria-haspopup="dialog">
+        <img class="shop-card__img" src="assets/images/shop-04-knee-high-boots.png" alt="" draggable="false" />
+        <span class="shop-card__no">04</span>
+        <span class="shop-card__name">Knee High Boots</span>
+        <img class="shop-card__arrow" src="assets/images/arrow-right.svg" alt="" draggable="false" />
+      </button>
+    </div>
+  </section>
+  <!-- ================= /SHOP THE LOOK ================= -->
+
+  <!-- ================= ABOUT (Figma 1440 × 696 — 본문 610 + 푸터 86) ================= -->
+  <section class="about" id="about" aria-label="About SCENE.">
+    <div class="about__bg" aria-hidden="true">
+      <img class="about__img" src="assets/images/about.jpg" alt="" />
+      <div class="about__dim"></div>
+    </div>
+
+    <h2 class="about__title">ABOUT<br />SCENE.</h2>
+    <p class="about__sub">Where fashion, city and motion become one.</p>
+    <p class="about__desc">도시의 다양한 장면을 하나의 패션 에디토리얼로 연결한 <br />SCENE.은 AI 비주얼과 영상, Figma 디자인, 웹 인터랙션을 <br />결합한 개인 프로젝트입니다.</p>
+    <p class="about__credits"><span>Creative Direction</span><span>Figma UI Design</span><span>AI Image &amp; Motion</span><span>Web Interaction</span></p>
+
+    <a class="about__btn" href="https://namjihye8305-ctrl.github.io/jihye_portfolio/jihye_portfolio.html" target="_blank" rel="noopener">
+      <span>VIEW FULL PORTFOLIO</span>
+      <img src="assets/images/chevron-right.svg" alt="" />
+    </a>
+
+    <footer class="about__footer">
+      <p class="about__copy">© 2026 SCENE. All rights reserved.</p>
+      <img class="about__logo" src="assets/images/logo-scene.svg" alt="SCENE." />
+    </footer>
+  </section>
+  <!-- ================= /ABOUT ================= -->
+
+  <!-- ================= QUICK VIEW (상품 카드 클릭 시 — js/shop.js 가 내용을 채움) ================= -->
+  <dialog class="qv" aria-labelledby="qv-name">
+    <div class="qv__panel">
+      <div class="qv__media"><img class="qv__img" src="" alt="" /></div>
+      <div class="qv__info">
+        <p class="qv__no"></p>
+        <h3 class="qv__name" id="qv-name"></h3>
+        <p class="qv__look">LOOK 01 — EULJIRO AFTER HOURS</p>
+        <p class="qv__desc"></p>
+        <p class="qv__note">CONCEPT ITEM · NOT FOR SALE</p>
+      </div>
+      <button class="qv__close" type="button" aria-label="닫기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M5 5l14 14M19 5L5 19" />
+        </svg>
+      </button>
+    </div>
+  </dialog>
+  <!-- ================= /QUICK VIEW ================= -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/editorial.js"></script>
   <script src="js/runway.js"></script>
+  <script src="js/shop.js"></script>
   <script src="js/menu.js"></script>
 </body>
 </html>

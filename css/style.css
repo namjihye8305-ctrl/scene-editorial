@@ -7,6 +7,13 @@
 
 @font-face {
   font-family: "Helvetica Now Display";
+  src: url("../assets/fonts/HelveticaNowDisplay-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Now Display";
   src: url("../assets/fonts/HelveticaNowDisplay-Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
@@ -625,6 +632,383 @@ p { margin: 0; }
 }
 
 /* =========================================================
+   SHOP THE LOOK — Figma 1440 × 610
+   ========================================================= */
+.shop {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 610;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #0d0d0d;
+  color: var(--paper);
+}
+.shop > * {
+  --u: calc(100cqw / 1440);
+}
+
+/* SHOP THE LOOK — Helvetica Now Display Medium 76 / 76 @ (69, 179) */
+.shop__title {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(179 * var(--u));
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: calc(76 * var(--u));
+  line-height: calc(76 * var(--u));
+  white-space: nowrap;
+}
+/* 런웨이 속 아이템을 만나보세요. — Light 16 / 20 @ (69, 362) */
+.shop__sub {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(362 * var(--u));
+  font-family: "Helvetica Now Display", var(--font-ko);
+  font-weight: 300;
+  font-size: calc(16 * var(--u));
+  line-height: calc(20 * var(--u));
+  white-space: nowrap;
+}
+/* DRAG TO EXPLORE ↔ — 안내 문구(버튼 아님, 테두리 없음)
+   글자 Regular 14 @ (70, 415) / 화살표 16 × 10 @ (201, 419) */
+.shop__hint {
+  position: absolute;
+  left: calc(70 * var(--u));
+  top: calc(415 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(9.5 * var(--u));
+  height: calc(17 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: normal;
+  white-space: nowrap;
+  user-select: none;
+}
+.shop__hint img {
+  display: block;
+  width: calc(17 * var(--u));
+  height: calc(11 * var(--u));
+}
+.shop__hint-mo { display: none; }
+
+/* 캐러셀 — 카드 영역 x 505 ~ 화면 오른쪽 끝, y 85, 높이 440
+   마지막 카드 뒤에 70 여백(페이지 우측 여백과 동일)을 두어 끝까지 스크롤하면 4번 카드가 온전히 보임 */
+.shop__track {
+  position: absolute;
+  left: calc(505 * var(--u));
+  right: 0;
+  top: calc(85 * var(--u));
+  height: calc(440 * var(--u));
+  display: flex;
+  gap: calc(14 * var(--u));
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.shop__track::-webkit-scrollbar { display: none; }
+.shop__track::after {
+  content: "";
+  flex: 0 0 calc(56 * var(--u)); /* 70 - gap 14 */
+}
+/* 마우스 드래그 중 · 놓은 뒤 가까운 카드로 이동하는 동안에는 스냅을 잠시 끔 (js/shop.js) */
+.shop__track.is-dragging,
+.shop__track.is-settling { scroll-snap-type: none; }
+.shop__track.is-dragging,
+.shop__track.is-dragging .shop-card { cursor: grabbing; }
+
+/* 카드 260 × 440 흰색 / 이미지 240 × 300 @ (10, 35)
+   번호 Regular 14 / 20 @ (25, 356) / 상품명 Bold 18 / 20 @ (25, 382) / 화살표 24 @ (215, 380) */
+.shop-card {
+  position: relative;
+  flex: 0 0 calc(260 * var(--u));
+  height: calc(440 * var(--u));
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  text-align: left;
+  scroll-snap-align: start;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.shop-card:focus-visible { outline: 2px solid var(--ink); outline-offset: -6px; }
+.shop-card__img {
+  position: absolute;
+  left: calc(10 * var(--u));
+  top: calc(35 * var(--u));
+  width: calc(240 * var(--u));
+  height: calc(300 * var(--u));
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.shop-card__no,
+.shop-card__name {
+  position: absolute;
+  left: calc(25 * var(--u));
+  line-height: calc(20 * var(--u));
+  white-space: nowrap;
+}
+.shop-card__no {
+  top: calc(356 * var(--u));
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+}
+.shop-card__name {
+  top: calc(382 * var(--u));
+  font-weight: 700;
+  font-size: calc(18 * var(--u));
+  text-transform: uppercase;
+}
+.shop-card__arrow {
+  position: absolute;
+  left: calc(215 * var(--u));
+  top: calc(380 * var(--u));
+  width: calc(24 * var(--u));
+  height: calc(24 * var(--u));
+  pointer-events: none;
+}
+
+/* =========================================================
+   ABOUT — Figma 1440 × 696 (본문 610 + 푸터 86)
+   ========================================================= */
+.about {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 696;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #0d0d0d; /* 푸터 띠 (Figma Rectangle 11) */
+  color: var(--paper);
+}
+.about > * {
+  --u: calc(100cqw / 1440);
+}
+
+/* 배경 — 본문 610 높이. 사진 1488.1 × 837.5 @ (0, -89.4) (Figma 크롭 그대로, 원본 비율 유지) */
+.about__bg {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(610 * var(--u));
+  overflow: hidden;
+  background: #111;
+}
+.about__img {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: calc(-89.4 * var(--u));
+  width: calc(1488.1 * var(--u));
+  aspect-ratio: 1672 / 941;
+  max-width: none;
+  user-select: none;
+}
+/* dim — 오른쪽 투명 → 왼쪽 검정 35% (Figma Rectangle 10) + 상단 안쪽 그림자 */
+.about__dim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0) 52.555%, rgba(0, 0, 0, 0.35) 80.594%);
+  box-shadow: inset 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25);
+}
+
+/* ABOUT SCENE. — Cormorant Garamond Medium 98 / 82 / -3.92 @ (69, 123) */
+.about__title {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(123 * var(--u));
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: calc(98 * var(--u));
+  line-height: calc(82 * var(--u));
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+/* Where fashion, city and motion become one. — Light 16 / 20 @ (69, 315) */
+.about__sub {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(315 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: calc(16 * var(--u));
+  line-height: calc(20 * var(--u));
+  white-space: nowrap;
+}
+/* 한글 설명 3줄 — Light 14 / 20 @ (69, 369) */
+.about__desc {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(369 * var(--u));
+  font-family: "Helvetica Now Display", var(--font-ko);
+  font-weight: 300;
+  font-size: calc(14 * var(--u));
+  line-height: calc(20 * var(--u));
+  white-space: nowrap;
+}
+/* Creative Direction | … — Regular 12 / 20 @ (69, 550) */
+.about__credits {
+  position: absolute;
+  left: calc(69 * var(--u));
+  top: calc(550 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(12 * var(--u));
+  line-height: calc(20 * var(--u));
+  white-space: nowrap;
+}
+.about__credits span + span::before {
+  content: "   |   ";
+  white-space: pre;
+}
+
+/* VIEW FULL PORTFOLIO › — 박스 212 × 34 @ (1158, 541), 1px 흰 테두리
+   글자 Medium 14 @ x 1184 / 화살표 20 @ x 1334 */
+.about__btn {
+  position: absolute;
+  left: calc(1158 * var(--u));
+  top: calc(541 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(1 * var(--u));
+  width: calc(212 * var(--u));
+  height: calc(34 * var(--u));
+  padding-left: calc(25 * var(--u));
+  border: calc(1 * var(--u)) solid var(--paper);
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: calc(14 * var(--u));
+  line-height: normal;
+  white-space: nowrap;
+}
+.about__btn img {
+  display: block;
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+}
+
+/* 푸터 — y 610 ~ 696. © Regular 12 / 20 @ (1053, 643) / 로고 108 × 24.2 @ (1262, 641) */
+.about__footer {
+  position: absolute;
+  inset: calc(610 * var(--u)) 0 0 0;
+}
+.about__copy {
+  position: absolute;
+  left: calc(1053 * var(--u));
+  top: calc(33 * var(--u));
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(12 * var(--u));
+  line-height: calc(20 * var(--u));
+  white-space: nowrap;
+}
+.about__logo {
+  position: absolute;
+  display: block;
+  left: calc(1262 * var(--u));
+  top: calc(31 * var(--u));
+  width: calc(108 * var(--u));
+  height: auto;
+}
+
+/* =========================================================
+   QUICK VIEW — 상품 카드 클릭 시 열리는 모달 (<dialog>)
+   Figma 시안에 없는 화면 — SHOP 카드의 색·서체만 사용해 최소 구성
+   ========================================================= */
+.qv {
+  --u: calc(100vw / 1440);
+  width: calc(760 * var(--u));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  overflow: visible;
+}
+.qv::backdrop { background: rgba(0, 0, 0, 0.6); }
+/* 모달이 열려 있는 동안 배경 스크롤 방지 (js/shop.js 가 스크롤바 너비만큼 body 여백을 보정) */
+html.is-qv-open { overflow: hidden; }
+
+.qv__panel {
+  position: relative;
+  display: flex;
+}
+.qv__media {
+  flex: 0 0 calc(360 * var(--u));
+  padding: calc(40 * var(--u)) calc(20 * var(--u));
+}
+.qv__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 240 / 300; /* 카드 이미지와 같은 비율 */
+}
+.qv__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: calc(72 * var(--u)) calc(48 * var(--u)) calc(48 * var(--u)) calc(20 * var(--u));
+}
+.qv__no {
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: calc(20 * var(--u));
+}
+.qv__name {
+  margin: calc(6 * var(--u)) 0 0;
+  font-weight: 700;
+  font-size: calc(28 * var(--u));
+  line-height: calc(32 * var(--u));
+  text-transform: uppercase;
+}
+.qv__look {
+  margin-top: calc(14 * var(--u));
+  font-weight: 400;
+  font-size: calc(12 * var(--u));
+  line-height: calc(14 * var(--u));
+}
+.qv__desc {
+  margin-top: calc(36 * var(--u));
+  font-family: var(--font-ko);
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: calc(22 * var(--u));
+  word-break: keep-all;
+}
+.qv__note {
+  margin-top: auto;
+  padding-top: calc(24 * var(--u));
+  font-weight: 400;
+  font-size: calc(10 * var(--u));
+  line-height: calc(12 * var(--u));
+  letter-spacing: 0.06em;
+}
+.qv__close {
+  position: absolute;
+  right: calc(16 * var(--u));
+  top: calc(16 * var(--u));
+  width: calc(32 * var(--u));
+  height: calc(32 * var(--u));
+  padding: calc(4 * var(--u));
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.qv__close svg { display: block; width: 100%; height: 100%; }
+
+/* =========================================================
    MOBILE (MO) — 767px 이하 전용
    기준 너비 390px / 320px 까지 대응
    PC(768px~) 레이아웃은 위 규칙 그대로 — 아래는 모두 미디어쿼리 안에서만 덮어씀
@@ -956,6 +1340,175 @@ p { margin: 0; }
     font-size: 11px;
     line-height: 14px;
   }
+
+  /* ---------- SHOP THE LOOK ----------
+     위에서 아래로: 타이틀 → 안내 문구(SWIPE) → 가로 스와이프 캐러셀
+     카드는 PC 와 같은 비율(260 × 440)로 축소 — 390px 에서 240 × 406, 다음 카드가 걸쳐 보임 */
+  .shop {
+    aspect-ratio: auto;
+    padding: 72px 0 64px;
+  }
+  .shop > * { --u: clamp(0.8px, 0.2367vw, 0.9231px); }
+
+  .shop__intro { padding: 0 20px; }
+  .shop__title,
+  .shop__sub,
+  .shop__hint { position: static; }
+  .shop__title {
+    font-size: clamp(40px, 12.3vw, 56px);
+    line-height: 1;
+  }
+  .shop__sub {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .shop__hint {
+    gap: 10px;
+    height: 17px;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .shop__hint img { width: 17px; height: 11px; }
+  .shop__hint-pc { display: none; }
+  .shop__hint-mo { display: inline; }
+
+  /* 가로 스와이프는 캐러셀이, 세로 스와이프는 페이지가 처리 (브라우저 기본 동작) */
+  .shop__track {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 36px;
+    padding-left: 20px;
+    scroll-padding-left: 20px;
+    gap: 12px;
+    cursor: auto;
+  }
+  .shop__track::after { flex-basis: 8px; } /* 20 - gap 12 */
+
+  /* ---------- ABOUT ----------
+     사진이 화면을 채우고 텍스트는 아래에서부터 쌓음, 맨 아래 푸터 띠 72px */
+  .about {
+    aspect-ratio: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    --about-fs: clamp(48px, 17vw, 104px);
+  }
+  .about__bg {
+    inset: 0 0 72px 0;
+    height: auto;
+  }
+  .about__img {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: 60% 50%; /* 모델 얼굴이 가운데 오도록 */
+  }
+  .about__dim {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.45) 45%, rgba(0, 0, 0, 0) 78%);
+    box-shadow: none;
+  }
+
+  .about__title,
+  .about__sub,
+  .about__desc,
+  .about__credits,
+  .about__btn,
+  .about__footer {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .about__title {
+    margin-left: calc(20px - var(--about-fs) * 0.02);
+    font-size: var(--about-fs);
+    line-height: calc(var(--about-fs) * 0.8367);
+  }
+  .about__sub {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: normal;
+  }
+  .about__desc {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 20px;
+    white-space: normal;
+    word-break: keep-all;
+  }
+  .about__desc br { display: none; }
+  .about__credits {
+    margin-top: 24px;
+    font-size: 11px;
+    line-height: 18px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  /* 줄이 바뀌어도 구분선이 줄 맨 앞에 오지 않도록 뒤쪽에 붙임 */
+  .about__credits span { white-space: nowrap; }
+  .about__credits span + span::before { content: none; }
+  .about__credits span:not(:last-child)::after {
+    content: "   |   ";
+    white-space: pre;
+  }
+  .about__btn {
+    align-self: flex-start;
+    gap: 2px;
+    width: auto;
+    height: 36px;
+    margin-top: 24px;
+    margin-bottom: 32px;
+    padding: 0 12px 0 20px;
+    border-width: 1px;
+    font-size: 13px;
+  }
+  .about__btn img { width: 20px; height: 20px; }
+
+  .about__footer {
+    inset: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    margin: 0;
+    padding: 0 20px;
+  }
+  .about__copy,
+  .about__logo { position: static; }
+  .about__copy { font-size: 11px; line-height: 16px; }
+  .about__logo { width: 84px; }
+
+  /* ---------- QUICK VIEW ---------- 세로 배치: 이미지 → 정보 */
+  .qv {
+    --u: 1px;
+    width: min(calc(100vw - 40px), 400px);
+    max-height: calc(100vh - 40px);
+    max-height: calc(100svh - 40px);
+    overflow-y: auto;
+  }
+  .qv__panel { flex-direction: column; }
+  .qv__media {
+    flex: none;
+    padding: 44px 0 0;
+  }
+  .qv__img {
+    width: 66%;
+    margin: 0 auto;
+  }
+  .qv__info { padding: 12px 24px 28px; }
+  .qv__name { font-size: 24px; line-height: 28px; }
+  .qv__desc { margin-top: 20px; }
+  .qv__note { margin-top: 28px; padding-top: 0; }
+  .qv__close { right: 8px; top: 8px; width: 40px; height: 40px; padding: 8px; }
 }
 
 /* 소형 모바일(359px 이하) — 을지로 리드 카피 1행이 두 줄로 넘어가므로 리드 영역 3줄 확보 */
