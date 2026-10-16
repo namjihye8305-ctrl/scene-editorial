@@ -207,8 +207,19 @@
   <!-- ================= RUNWAY (Figma 1440 × 900) ================= -->
   <section class="runway" id="runway" aria-label="Runway">
     <!-- 가운데 세로 영상 506 × 900 @ x 452 — 한 번만 재생 후 마지막 장면 고정(js/runway.js), 마우스를 올리면 정지 -->
-    <video class="runway__video" src="assets/videos/runway.mp4" poster="assets/images/runway-poster.jpg"
-           muted playsinline autoplay preload="auto" aria-label="LOOK 01 런웨이 영상"></video>
+    <div class="runway__stage">
+      <video class="runway__video" src="assets/videos/runway.mp4" poster="assets/images/runway-poster.jpg"
+             muted playsinline autoplay preload="auto" aria-label="LOOK 01 런웨이 영상"></video>
+      <!-- 재생이 끝나면 영상 가운데에 표시 — 클릭하면 처음부터 다시 재생 (js/runway.js) -->
+      <button class="runway__replay" type="button" aria-label="영상 다시 재생" tabindex="-1">
+        <svg class="runway__replay-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <!-- 원형 라인 끝 = 화살표 꼭짓점. 화살표는 곡선이 들어오는 방향(약 30°)에 맞춰 대칭 -->
+          <path d="M20 12a8 8 0 1 1-2.343-5.657" stroke-linecap="round" />
+          <path d="M12.83 7.64L17.657 6.343L16.36 1.51" />
+        </svg>
+        <span>REPLAY</span>
+      </button>
+    </div>
 
     <!-- 영상 가장자리를 배경색으로 녹이는 그라데이션 (클릭/호버 통과) -->
     <div class="runway__fade runway__fade--left" aria-hidden="true"></div>

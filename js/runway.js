@@ -42,16 +42,26 @@
 
   // 끝나서 멈춘 뒤 영상을 클릭(탭)하면 처음부터 다시 재생 (마우스가 올라가 있어도 재생)
   // 재생 중 터치로 탭하면 정지 ↔ 이어서 재생
-  video.addEventListener("ended", () => video.classList.add("is-ended"));
-  video.addEventListener("play", () => video.classList.remove("is-ended"));
-  video.addEventListener("click", () => {
-    if (video.ended) {
-      tapPaused = false;
-      video.currentTime = 0;
-      const p = video.play();
-      if (p && p.catch) p.catch(() => {});
-      return;
+  // 끝나면 영상 가운데에 REPLAY 표시
+  const replayBtn = document.querySelector(".runway__replay");
+  const replay = () => {
+    tapPaused = false;
+    video.currentTime = 0;
+    const p = video.play();
+    if (p && p.catch) p.catch(() => {});
+  };
+  const setEnded = (on) => {
+    video.classList.toggle("is-ended", on);
+    if (replayBtn) {
+      replayBtn.classList.toggle("is-visible", on);
+      replayBtn.tabIndex = on ? 0 : -1;
     }
+  };
+  video.addEventListener("ended", () => setEnded(true));
+  video.addEventListener("play", () => setEnded(false));
+  if (replayBtn) replayBtn.addEventListener("click", replay);
+  video.addEventListener("click", () => {
+    if (video.ended) return replay();
     if (lastPointer !== "mouse") {
       // 자동재생이 막혀 멈춰 있던 경우(사용자가 멈춘 게 아님) → 탭하면 재생
       if (video.paused && !tapPaused) return sync();

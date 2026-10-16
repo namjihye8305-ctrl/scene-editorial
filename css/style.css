@@ -534,18 +534,68 @@ p { margin: 0; }
   --u: calc(100cqw / 1440);
 }
 
-/* 영상 — 506 × 900 @ (452, 0) */
-.runway__video {
+/* 영상 틀 — 506 × 900 @ (452, 0) */
+.runway__stage {
   position: absolute;
   left: calc(452 * var(--u));
   top: 0;
   width: calc(506 * var(--u));
+  height: 100%;
+}
+.runway__video {
+  width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 /* 재생이 끝나 멈춘 상태 — 클릭하면 다시 재생 (js/runway.js) */
 .runway__video.is-ended { cursor: pointer; }
+
+/* REPLAY — 영상 가운데, 재생이 끝나면 나타남 (가장자리 그라데이션보다 위) */
+.runway__replay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: calc(12 * var(--u));
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 calc(12 * var(--u)) rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+}
+.runway__replay.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0s;
+}
+.runway__replay-icon {
+  width: calc(44 * var(--u));
+  height: calc(44 * var(--u));
+  fill: none;
+  stroke: currentColor;
+  /* SHOP 카드 화살표(24px 에 1.6)와 화면상 같은 굵기: 1.6 × 24 / 44 */
+  stroke-width: 0.87;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 calc(6 * var(--u)) rgba(0, 0, 0, 0.35));
+  transition: transform 0.4s ease;
+}
+.runway__replay:hover .runway__replay-icon {
+  transform: rotate(-30deg);
+}
 
 /* 가장자리 그라데이션 — 영상 위에 덮이므로 마우스 이벤트는 통과시킴 */
 .runway__fade {
@@ -1292,17 +1342,20 @@ html.is-qv-open { overflow: hidden; }
     transform: none;
   }
   .runway__brand { order: 1; }
-  .runway__video { order: 2; }
+  .runway__stage { order: 2; }
   .runway__look  { order: 3; }
 
-  .runway__video {
+  .runway__stage {
     position: relative;
     left: auto;
     top: auto;
     width: min(76vw, 380px);
     height: auto;
-    aspect-ratio: 9 / 16;
     margin-top: 28px;
+  }
+  .runway__video {
+    height: auto;
+    aspect-ratio: 9 / 16;
     /* PC 의 가장자리 그라데이션 대신 영상 가장자리를 배경색으로 녹임 */
     -webkit-mask-image:
       linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%),
@@ -1314,6 +1367,17 @@ html.is-qv-open { overflow: hidden; }
     mask-composite: intersect;
   }
   .runway__fade { display: none; }
+
+  .runway__replay {
+    gap: 10px;
+    font-size: 12px;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+  }
+  .runway__replay-icon {
+    width: 44px;
+    height: 44px;
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.35));
+  }
 
   .runway__logo { width: 96px; }
   .runway__title {
